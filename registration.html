@@ -1,137 +1,292 @@
-const todoList = () => {
-  all = []
-  const add = (todoItem) => {
-    all.push(todoItem)
-  }
-  const markAsComplete = (index) => {
-    all[index].completed = true
-  }
-
-  const overdue = () => {
-    // Write the date check condition here and return the array of overdue items accordingly.
-    // FILL YOUR CODE HERE
-    // ..
-    // ..
-    // ..
-    var i;
-    var overdue_lst = [];
-    for (i in all) {
-      if (all[i].dueDate < today) {
-        overdue_lst.push(all[i]);
-      }
-    }
-    return overdue_lst;
-  }
-
-  const dueToday = () => {
-    // Write the date check condition here and return the array of todo items that are due today accordingly.
-    // FILL YOUR CODE HERE
-    // ..
-    // ..
-    // ..
-    var i;
-    var dueToday_lst = [];
-    for (i in all) {
-      if (all[i].dueDate === today) {
-        dueToday_lst.push(all[i]);
-      }
-    }
-    return dueToday_lst;
-  }
-
-  const dueLater = () => {
-    // Write the date check condition here and return the array of todo items that are due later accordingly.
-    // FILL YOUR CODE HERE
-    // ..
-    // ..
-    // ..
-    var i;
-    var dueLater_lst = [];
-    for (i in all) {
-      if (all[i].dueDate > today) {
-        dueLater_lst.push(all[i]);
-      }
-    }
-    return dueLater_lst;
-  }
-
-  const toDisplayableList = (list) => {
-    // Format the To-Do list here, and return the output string as per the format given above.
-    // FILL YOUR CODE HERE
-    // ..
-    // ..
-    // ..
-    // return OUTPUT_STRING
-    var i;
-    var displayList = []
-    for (i=0;i<list.length;i++) {
-      if (list[i].completed === false) {
-        //`[ ] ${i.title} ${i.dueDate}`
-        if (list[i].dueDate===today) {
-          displayList.push(`[ ] ${list[i].title}`)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registration Form</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
         }
-        else {
-          displayList.push(`[ ] ${list[i].title} ${list[i].dueDate}`)
+
+        body {
+            background-color: aqua;
         }
-      }
-      else {
-        // `[x] ${i.title} ${i.dueDate}`
-        if (list[i].dueDate===today) {
-          displayList.push(`[x] ${list[i].title}`)
+
+        .head {
+            margin-top: 1rem;
+            /* color: white; */
         }
-        else {
-          displayList.push(`[x] ${list[i].title} ${list[i].dueDate}`)
-        }          
-      }
-    }
-    
-    return displayList.join("\n");
-  }
 
-  return { all, add, markAsComplete, overdue, dueToday, dueLater, toDisplayableList };
-}
+        .box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 3rem;
+        }
 
-// ####################################### #
-// DO NOT CHANGE ANYTHING BELOW THIS LINE. #
-// ####################################### #
+        .form {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            background-color: white;
+            width: 600px;
+            height: 500px;
+            box-shadow: 2px 4px 10px gray;
+            border: 1px solid black;
+            border-radius: 20px;
+            padding: 20px;
+        }
 
-const todos = todoList();
+        .input {
+            padding: 10px 15px;
+            border: 2px solid rgba(0, 0, 0, 0.4);
+            font-size: 18px;
+            outline: none;
+            border-radius: 10px;
+            background-color: rgba(0, 0, 0, 0.02);
+        }
 
-const formattedDate = d => {
-  return d.toISOString().split("T")[0]
-}
+        label {
+            font-size: 18px;
+            letter-spacing: 1.4px;
+        }
 
-var dateToday = new Date()
-const today = formattedDate(dateToday)
-const yesterday = formattedDate(
-  new Date(new Date().setDate(dateToday.getDate() - 1))
-)
-const tomorrow = formattedDate(
-  new Date(new Date().setDate(dateToday.getDate() + 1))
-)
+        .tableForm {
+            margin-top: 10px;
+        }
 
-todos.add({ title: 'Submit assignment', dueDate: yesterday, completed: false })
-todos.add({ title: 'Pay rent', dueDate: today, completed: true })
-todos.add({ title: 'Service Vehicle', dueDate: today, completed: false })
-todos.add({ title: 'File taxes', dueDate: tomorrow, completed: false })
-todos.add({ title: 'Pay electric bill', dueDate: tomorrow, completed: false })
+        .btn {
+            background-color: rgb(66, 55, 231);
+            color: white;
+            padding: 10px 20px;
+            font-size: large;
+            font-weight: 600;
+            border-radius: 10px;
+        }
 
-console.log("My Todo-list\n\n")
+        input:invalid:focus {
+            border: 2px solid red;
+        }
 
-console.log("Overdue")
-var overdues = todos.overdue()
-var formattedOverdues = todos.toDisplayableList(overdues)
-console.log(formattedOverdues)
-console.log("\n\n")
+        .table {
+            border: 2px solid black;
+            margin: 40px auto;
+        }
 
-console.log("Due Today")
-let itemsDueToday = todos.dueToday()
-let formattedItemsDueToday = todos.toDisplayableList(itemsDueToday)
-console.log(formattedItemsDueToday)
-console.log("\n\n")
+        .td,
+        .th {
+            padding: 10px;
+            text-align: center;
+        }
 
-console.log("Due Later")
-let itemsDueLater = todos.dueLater()
-let formattedItemsDueLater = todos.toDisplayableList(itemsDueLater)
-console.log(formattedItemsDueLater)
-console.log("\n\n")
+        .subHead {
+            text-align: center;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <h1 align="center" class="head">WD101 - Level 8</h1>
+    <div class="box">
+        <form class="form" id="form">
+            <h2 align="center">Registration Form</h2>
+
+            <table class="tableForm" cellspacing="25px">
+                <tr>
+                    <td><label for="name">Name :</label></td>
+                    <td>
+                        <input class="input"
+                               type="text"
+                               name="name"
+                               id="name"
+                               placeholder="Full Name"
+                               required />
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="email">E-mail :</label></td>
+                    <td>
+                        <input class="input"
+                               type="email"
+                               name="email"
+                               id="email"
+                               placeholder="Email"
+                               required />
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="name">Password :</label></td>
+                    <td>
+                        <input class="input"
+                               type="password"
+                               name="password"
+                               id="password"
+                               placeholder="Password"
+                               required />
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="dob">Date Of Birth :</label></td>
+                    <td>
+                        <input style="width: 220px"
+                               class="input"
+                               type="date"
+                               name="dob"
+                               id="dob"
+                               required />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input type="checkbox" name="agree" id="agree" />
+                        <label for="checkbox">Accept Terms & Conditions</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button class="btn" type="submit">Submit</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+    <div class="entry">
+        <h2 class="subHead">Entries</h2>
+        <div id="tableDiv"></div>
+    </div>
+    <script>
+        let form = document.getElementById("form");
+
+        // localStorage.clear();
+        // let Entries = [];
+
+        const retriveEntries = () => {
+            let entries = localStorage.getItem("userEntry");
+
+            if (entries) {
+                entries = JSON.parse(entries);
+            } else {
+                entries = [];
+            }
+            return entries;
+        };
+
+        let Entries = retriveEntries();
+
+        const displayEntries = () => {
+            const entries = retriveEntries();
+
+            const rows = entries
+                .map((entry) => {
+                    const name = `<td class="td">${entry.name}</td>`;
+                    const email = `<td class="td">${entry.email}</td>`;
+                    const password = `<td class="td">${entry.password}</td>`;
+                    const dob = `<td class="td">${entry.dob}</td>`;
+                    const accseptConditions = `<td class="td">${entry.accseptConditions}</td>`;
+
+                    const row = `<tr>${name} ${email} ${password} ${dob} ${accseptConditions}</tr>`;
+                    return row;
+                })
+                .join("\n");
+
+            let tableDiv = document.getElementById("tableDiv");
+
+            // <th class="th">Name</th> inside oneMore head for name
+            tableDiv.innerHTML = `<table class="table" border="2">
+  <tr>
+    <th class="th">Name</th>
+    <th class="th">Email</th>
+    <th class="th">Password</th>
+    <th class="th">Dob</th>
+    <th class="th">Accepted terms?</th>
+  </tr>
+    ${rows}
+  </table>`;
+        };
+
+        // const saveUserFrom = () => {
+        const saveUserFrom = (event) => {
+            event.preventDefault();
+
+            let name = document.getElementById("name").value;
+            let email = document.getElementById("email").value;
+            let password = document.getElementById("password").value;
+            let dob = document.getElementById("dob").value;
+            let accseptConditions = document.getElementById("agree").checked;
+
+            let entry_obj = {
+                name,
+                email,
+                password,
+                dob,
+                accseptConditions,
+            };
+
+            Entries.push(entry_obj);
+
+            localStorage.setItem("userEntry", JSON.stringify(Entries));
+
+            displayEntries();
+        };
+
+        form.addEventListener("submit", saveUserFrom);
+
+        displayEntries();
+
+        // Add additional validations to the date input field so that it accepts date of birth for people between ages 18 and 55 only. You'll need to figure out how to do this.
+
+        function getAge(today, birthDate) {
+            // var today = new Date();
+            // var birthDate = new Date(DOB);
+
+            var age = today.getFullYear() - birthDate.getFullYear();
+            var m = today.getMonth() - birthDate.getMonth();
+            if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+            return age;
+        }
+
+        let dateELE = document.getElementById("dob");
+
+        dateELE.addEventListener("change", () => {
+            let [year, month, date] = document.getElementById("dob").value.split("-");
+
+            let dob = new Date(year, month, date);
+            let Today = new Date();
+
+            age = getAge(Today, dob);
+
+            dateELE.style.border = "2px solid rgba(0, 0, 0, 0.4)";
+            if (age < 18 || age > 55) {
+                dateELE.setCustomValidity("Your age is not lies between 18 and 55");
+                dateELE.style.border = "2px solid red";
+                return;
+            } else {
+                dateELE.setCustomValidity("");
+            }
+        });
+
+        const email = document.getElementById("email");
+
+        email.addEventListener("input", () => validate(email));
+
+        function validate(ele) {
+            if (ele.validity.typeMismatch) {
+                ele.setCustomValidity("The Email is not in the right format!!!");
+                ele.reportValidity();
+            } else {
+                ele.setCustomValidity("");
+            }
+        }
+    </script>
+
+</body>
+</html>
